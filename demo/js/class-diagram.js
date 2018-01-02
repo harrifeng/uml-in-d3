@@ -91,22 +91,22 @@ d3.classDiagram = (function() {
 
   function createClasses(classes) {
     var g = svg.selectAll('g.class')
-      .data(classes).enter().append('g')
-      .attr({
-        id: function(d) { return d.classname + 'Class'; },
-        'class': 'class',
-        transform: function(d) {
-          return "translate(" + d.x + "," + d.y + ")";
-        },
-      });
+        .data(classes).enter().append('g')
+        .attr({
+          id: function(d) { return d.classname + 'Class'; },
+          'class': 'class',
+          transform: function(d) {
+            return "translate(" + d.x + "," + d.y + ")";
+          },
+        });
 
     g.append('rect')
-      .attr({
-        'width': function(d) { return d.width; },
-        'fill': 'none',
-        'stroke': 'black',
-        'stroke-width': 1
-      });
+        .attr({
+          'width': function(d) { return d.width; },
+          'fill': 'none',
+          'stroke': 'black',
+          'stroke-width': 1
+        });
 
     var classNameG = g.append('g')
       .attr('class', 'classname');
@@ -120,20 +120,20 @@ d3.classDiagram = (function() {
     var classNameTexts = classNameG.append('text')
       .attr('font-size', 12)
       .call(d3.multilineText()
-        .verticalAlign('top')
-        .paddingTop(4)
-        .paddingBottom(4)
-        .text(function(d) { return d.classname; })
-      );
+            .verticalAlign('top')
+            .paddingTop(4)
+            .paddingBottom(4)
+            .text(function(d) { return d.classname; })
+           );
 
     adjustHeight(classNameRects[0], classNameTexts[0], 4, 4);
 
     function adjustHeight(rects, texts, paddingTop, paddingBottom) {
       var i,
-          n = rects.length,
-          rect,
-          text,
-          height;
+      n = rects.length,
+      rect,
+      text,
+      height;
       for (i = 0; i < n; i++) {
         rect = rects[i];
         text = texts[i];
@@ -147,7 +147,7 @@ d3.classDiagram = (function() {
         'class': 'attributes',
         'transform': function(d) {
           var classNameG = d3.select(this).node().previousSibling,
-              height = classNameG.getBBox().height;
+          height = classNameG.getBBox().height;
           return 'translate(0,' + height + ')';
         }
       });
@@ -161,12 +161,12 @@ d3.classDiagram = (function() {
     var attributesTexts = attributesG.append('text')
       .attr('font-size', 12)
       .call(d3.multilineText()
-        .text(function(d) { return d.attributes; })
-        .verticalAlign('top')
-        .horizontalAlign('left')
-        .paddingTop(4)
-        .paddingLeft(4)
-      );
+            .text(function(d) { return d.attributes; })
+            .verticalAlign('top')
+            .horizontalAlign('left')
+            .paddingTop(4)
+            .paddingLeft(4)
+           );
     adjustHeight(attributesRects[0], attributesTexts[0], 4, 4);
 
     var methodsG = g.append('g')
@@ -174,9 +174,9 @@ d3.classDiagram = (function() {
         'class': 'methods',
         'transform': function(d) {
           var attributesG = d3.select(this).node().previousSibling,
-              classNameText = attributesG.previousSibling,
-              classNameBBox = classNameText.getBBox(),
-              attributesBBox = attributesG.getBBox();
+          classNameText = attributesG.previousSibling,
+          classNameBBox = classNameText.getBBox(),
+          attributesBBox = attributesG.getBBox();
           return 'translate(0,' + (classNameBBox.height + attributesBBox.height) + ')';
         }
       });
@@ -188,14 +188,14 @@ d3.classDiagram = (function() {
         'stroke-width': 1
       });
     var methodsTexts = methodsG.append('text')
-      .attr('font-size', 12)
+        .attr('font-size', 12)
       .call(d3.multilineText()
-        .text(function(d) { return d.methods; })
-        .verticalAlign('top')
-        .horizontalAlign('left')
-        .paddingTop(4)
-        .paddingLeft(4)
-      );
+            .text(function(d) { return d.methods; })
+            .verticalAlign('top')
+            .horizontalAlign('left')
+            .paddingTop(4)
+            .paddingLeft(4)
+           );
     adjustHeight(methodsRects[0], methodsTexts[0], 4, 4);
 
     svg.selectAll('g.class')
@@ -206,9 +206,9 @@ d3.classDiagram = (function() {
             attributesG = classNameG.nextSibling,
             methodsG = attributesG.nextSibling,
             height =
-              classNameG.getBBox().height +
-              attributesG.getBBox().height +
-              methodsG.getBBox().height;
+            classNameG.getBBox().height +
+            attributesG.getBBox().height +
+            methodsG.getBBox().height;
         d3.select(classRect).attr('height', height);
       });
 
@@ -216,7 +216,7 @@ d3.classDiagram = (function() {
     svg.selectAll('g.class')
       .each(function(d, i) {
         var classG = d3.select(this),
-            bbox = classG.node().getBBox();
+        bbox = classG.node().getBBox();
         boxes[d.classname] = new d3.classDiagram.Box(d.x, d.y, bbox.width, bbox.height);
       });
 
@@ -259,9 +259,9 @@ d3.classDiagram = (function() {
       .attr({
         'stroke-dasharray': function(d) {
           var path = d3.select(this),
-              totalLength = path.node().getTotalLength(),
-              marker = svg.select('#' + d['markerEnd'])[0][0],
-              markerWidth = marker.markerWidth.baseVal.value;
+          totalLength = path.node().getTotalLength(),
+          marker = svg.select('#' + d['markerEnd'])[0][0],
+          markerWidth = marker.markerWidth.baseVal.value;
           return '' + (totalLength - markerWidth) + ' ' + markerWidth;
         },
         'stroke-dashoffset': 0
